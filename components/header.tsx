@@ -36,25 +36,25 @@ export function Header() {
             href="#technology"
             className="text-sm transition-colors text-muted-foreground hover:text-foreground"
           >
-            Product
+            ผลิตภัณฑ์
           </Link>
           <Link
             href="#gallery"
             className="text-sm transition-colors text-muted-foreground hover:text-foreground"
           >
-            Features
+            ฟีเจอร์
           </Link>
           <Link
             href="#accessories"
             className="text-sm transition-colors text-muted-foreground hover:text-foreground"
           >
-            Pricing
+            ราคา
           </Link>
           <Link
             href="#about"
             className="text-sm transition-colors text-muted-foreground hover:text-foreground"
           >
-            About
+            เกี่ยวกับเรา
           </Link>
         </nav>
 
@@ -64,7 +64,7 @@ export function Header() {
             href="#reserve"
             className="px-4 py-2 text-sm font-medium transition-all rounded-full bg-foreground text-background hover:opacity-80"
           >
-            Get API Key
+            รับ API Key
           </Link>
         </div>
 
@@ -88,35 +88,35 @@ export function Header() {
               className="text-lg text-foreground"
               onClick={() => setIsMenuOpen(false)}
             >
-              Product
+              ผลิตภัณฑ์
             </Link>
             <Link
               href="#gallery"
               className="text-lg text-foreground"
               onClick={() => setIsMenuOpen(false)}
             >
-              Features
+              ฟีเจอร์
             </Link>
             <Link
               href="#accessories"
               className="text-lg text-foreground"
               onClick={() => setIsMenuOpen(false)}
             >
-              Pricing
+              ราคา
             </Link>
             <Link
               href="#about"
               className="text-lg text-foreground"
               onClick={() => setIsMenuOpen(false)}
             >
-              About
+              เกี่ยวกับเรา
             </Link>
             <Link
               href="#reserve"
               className="mt-4 bg-foreground px-5 py-3 text-center text-sm font-medium text-background rounded-full"
               onClick={() => setIsMenuOpen(false)}
             >
-              Get API Key
+              รับ API Key
             </Link>
           </nav>
         </div>

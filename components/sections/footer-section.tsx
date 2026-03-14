@@ -5,20 +5,20 @@ import Link from "next/link";
 const footerLinks = {
   explore: [
     { label: "API", href: "#products" },
-    { label: "Docs", href: "#technology" },
-    { label: "Features", href: "#gallery" },
-    { label: "Pricing", href: "#accessories" },
+    { label: "เอกสาร", href: "#technology" },
+    { label: "ฟีเจอร์", href: "#gallery" },
+    { label: "ราคา", href: "#accessories" },
   ],
   about: [
-    { label: "Our Story", href: "#" },
-    { label: "Team", href: "#" },
-    { label: "Careers", href: "#" },
-    { label: "Contact", href: "#" },
+    { label: "เรื่องราวของเรา", href: "#" },
+    { label: "ทีมงาน", href: "#" },
+    { label: "ร่วมงานกับเรา", href: "#" },
+    { label: "ติดต่อ", href: "#" },
   ],
   service: [
-    { label: "FAQ", href: "#" },
-    { label: "Status", href: "#" },
-    { label: "Changelog", href: "#" },
+    { label: "คำถามที่พบบ่อย", href: "#" },
+    { label: "สถานะระบบ", href: "#" },
+    { label: "บันทึกการเปลี่ยนแปลง", href: "#" },
     { label: "SLA", href: "#" },
   ],
 };
@@ -35,13 +35,13 @@ export function FooterSection() {
               cketloom
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              E-invoicing infrastructure API for Thailand. Generate compliant e-Tax Invoices with a simple REST API — XML, PDF/A-3, and more.
+              โครงสร้างพื้นฐาน API สำหรับ e-invoicing ในประเทศไทย สร้างใบกำกับภาษีอิเล็กทรอนิกส์ที่ถูกต้องด้วย REST API เพียงครั้งเดียว — XML, PDF/A-3 และอื่นๆ
             </p>
           </div>
 
           {/* Explore */}
           <div>
-            <h4 className="mb-4 text-sm font-medium text-foreground">Explore</h4>
+            <h4 className="mb-4 text-sm font-medium text-foreground">สำรวจ</h4>
             <ul className="space-y-3">
               {footerLinks.explore.map((link) => (
                 <li key={link.label}>
@@ -58,7 +58,7 @@ export function FooterSection() {
 
           {/* About */}
           <div>
-            <h4 className="mb-4 text-sm font-medium text-foreground">About</h4>
+            <h4 className="mb-4 text-sm font-medium text-foreground">เกี่ยวกับ</h4>
             <ul className="space-y-3">
               {footerLinks.about.map((link) => (
                 <li key={link.label}>
@@ -75,7 +75,7 @@ export function FooterSection() {
 
           {/* Service */}
           <div>
-            <h4 className="mb-4 text-sm font-medium text-foreground">Service</h4>
+            <h4 className="mb-4 text-sm font-medium text-foreground">บริการ</h4>
             <ul className="space-y-3">
               {footerLinks.service.map((link) => (
                 <li key={link.label}>
@@ -96,7 +96,7 @@ export function FooterSection() {
       <div className="border-t border-border px-6 py-6 md:px-12 lg:px-20">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <p className="text-xs text-muted-foreground">
-            2026 cketloom. All rights reserved.
+            2026 cketloom สงวนลิขสิทธิ์
           </p>
 
 

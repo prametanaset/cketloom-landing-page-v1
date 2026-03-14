@@ -3,10 +3,10 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 
 const specs = [
-  { label: "Uptime", value: "99.99%" },
-  { label: "Avg Latency", value: "<200ms" },
-  { label: "Formats", value: "XML + PDF" },
-  { label: "Compliance", value: "100%" },
+  { label: "อัปไทม์", value: "99.99%" },
+  { label: "เวลาตอบสนองเฉลี่ย", value: "<200ms" },
+  { label: "รูปแบบ", value: "XML + PDF" },
+  { label: "ความถูกต้อง", value: "100%" },
 ];
 
 export function EditorialSection() {

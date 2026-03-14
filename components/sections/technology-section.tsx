@@ -78,9 +78,9 @@ const sideImages = [
 ];
 
 const textCycles = [
-  "XML & PDF/A-3 Generation.",
-  "Auto Schema Updates.",
-  "Serverless Architecture.",
+  "สร้าง XML & PDF/A-3",
+  "อัปเดต Schema อัตโนมัติ",
+  "สถาปัตยกรรม Serverless",
 ];
 
 export function TechnologySection() {
@@ -89,7 +89,7 @@ export function TechnologySection() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [textProgress, setTextProgress] = useState(0);
   
-  const descriptionText = "E-invoicing infrastructure reimagining tax compliance. XML generation, Hybrid Invoice creation, and automatic schema updates combine to deliver 100% compliant documents. Serverless architecture ensures scalability with pay-per-use pricing for businesses of any size.";
+  const descriptionText = "โครงสร้างพื้นฐาน e-invoicing ที่พลิกโฉมการปฏิบัติตามข้อกำหนดภาษี การสร้าง XML การสร้าง Hybrid Invoice และการอัปเดต Schema อัตโนมัติ รวมกันเพื่อส่งมอบเอกสารที่ถูกต้อง 100% สถาปัตยกรรม Serverless รับประกันความสามารถในการขยายตัว พร้อมราคาแบบจ่ายตามการใช้งานสำหรับธุรกิจทุกขนาด";
 
   useEffect(() => {
     const handleScroll = () => {

@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: 'cketloom',
-  description: 'E-Invoicing infrastructure API for Thailand. Generate compliant e-Tax Invoices, XML, and PDF/A-3 Hybrid documents with a simple REST API.',
+  description: 'โครงสร้างพื้นฐาน API สำหรับ e-Invoicing ในประเทศไทย สร้างใบกำกับภาษีอิเล็กทรอนิกส์ที่ถูกต้องตามกฎหมาย XML และ PDF/A-3 ด้วย REST API เพียงครั้งเดียว',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -35,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="th">
       <body className={`${inter.variable} font-sans antialiased`}>
         {children}
         <Analytics />

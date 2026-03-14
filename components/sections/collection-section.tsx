@@ -6,22 +6,22 @@ const accessories = [
   {
     id: 1,
     name: "Starter",
-    description: "Up to 1,000 invoices/month with standard support",
-    price: "Free",
+    description: "สูงสุด 1,000 ใบแจ้งหนี้/เดือน พร้อมซัพพอร์ตมาตรฐาน",
+    price: "ฟรี",
     image: "/images/hero-side-1.png",
   },
   {
     id: 2,
     name: "Growth",
-    description: "Up to 50,000 invoices/month with priority support",
-    price: "$99/mo",
+    description: "สูงสุด 50,000 ใบแจ้งหนี้/เดือน พร้อมซัพพอร์ตลำดับสำคัญ",
+    price: "$99/เดือน",
     image: "/images/hero-side-2.png",
   },
   {
     id: 3,
     name: "Enterprise",
-    description: "Unlimited invoices with dedicated support & SLA",
-    price: "Custom",
+    description: "ไม่จำกัดจำนวนใบแจ้งหนี้ พร้อมซัพพอร์ตเฉพาะทางและ SLA",
+    price: "ติดต่อเรา",
     image: "/images/hero-side-4.png",
   },
 ];
@@ -32,7 +32,7 @@ export function CollectionSection() {
       {/* Section Title */}
       <div className="px-6 py-20 md:px-12 lg:px-20 md:py-10">
         <h2 className="text-3xl font-medium tracking-tight text-foreground md:text-4xl">
-          Pricing Plans
+          แผนราคา
         </h2>
       </div>
 

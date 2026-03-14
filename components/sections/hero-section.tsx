@@ -2,30 +2,31 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { NeonOrbs } from "@/components/neon-orbs";
 
 const word = "CKETLOOM";
 
 const sideImages = [
   {
-    src: "/images/hero-side-1.png",
+    src: "/images/hero-side-1.jpg",
     alt: "E-invoicing platform dashboard",
     position: "left",
     span: 1,
   },
   {
-    src: "/images/hero-side-2.png",
+    src: "/images/hero-side-1.jpg",
     alt: "API integration workflow",
     position: "left",
     span: 1,
   },
   {
-    src: "/images/hero-side-3.png",
+    src: "/images/hero-side-1.jpg",
     alt: "XML document generation",
     position: "right",
     span: 1,
   },
   {
-    src: "/images/hero-side-4.png",
+    src: "/images/hero-side-1.jpg",
     alt: "PDF/A-3 hybrid invoice",
     position: "right",
     span: 1,
@@ -57,10 +58,10 @@ export function HeroSection() {
   }, []);
 
   // Text fades out first (0 to 0.2)
-  const textOpacity = Math.max(0, 1 - (scrollProgress / 0.2));
+  const textOpacity = Math.max(0, 1 - (scrollProgress / 1));
   
   // Image transforms start after text fades (0.2 to 1)
-  const imageProgress = Math.max(0, Math.min(1, (scrollProgress - 0.2) / 0.8));
+  const imageProgress = Math.max(0, Math.min(1, (scrollProgress - 1) / 0.8));
   
   // Smooth interpolations - More balanced distribution
   const centerWidth = 100 - (imageProgress * 80); // 100% to 20% (same as each side image)
@@ -79,7 +80,14 @@ export function HeroSection() {
     <section ref={sectionRef} className="relative bg-background">
       {/* Sticky container for scroll animation */}
       <div className="sticky top-0 h-screen overflow-hidden">
-        <div className="flex h-full w-full items-center justify-center">
+        {/* NeonOrbs background - fades out with text */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{ opacity: textOpacity }}
+        >
+          <NeonOrbs />
+        </div>
+        <div className="relative z-[1] flex h-full w-full items-center justify-center">
           {/* Bento Grid Container */}
           <div 
             className="relative flex h-full w-full items-stretch justify-center"
@@ -87,7 +95,7 @@ export function HeroSection() {
           >
             
             {/* Left Column */}
-            <div 
+            {/* <div 
               className="flex h-full flex-row will-change-transform"
               style={{
                 width: `${sideWidth}%`,
@@ -113,7 +121,7 @@ export function HeroSection() {
                   />
                 </div>
               ))}
-            </div>
+            </div> */}
 
             {/* Main Hero Image - Center */}
             <div 
@@ -147,17 +155,17 @@ export function HeroSection() {
                 </h1>
               </div>
               
-              <Image
+              {/* <Image
                 src="/images/hero-mono.png"
                 alt="E-invoicing platform hero"
                 fill
                 className="absolute inset-0 z-10 object-cover"
                 priority
-              />
+              /> */}
             </div>
 
             {/* Right Column */}
-            <div 
+            {/* <div 
               className="flex h-full flex-row will-change-transform"
               style={{
                 width: `${sideWidth}%`,
@@ -183,22 +191,49 @@ export function HeroSection() {
                   />
                 </div>
               ))}
-            </div>
+            </div> */}
 
           </div>
         </div>
       </div>
 
-      {/* Tagline Section - Fixed at bottom */}
-      <div 
+      {/* Tagline + Waitlist Section - Fixed at bottom */}
+      <div
         className="pointer-events-none fixed bottom-0 left-0 right-0 z-10 px-6 pb-12 md:px-12 md:pb-16 lg:px-20 lg:pb-20"
         style={{ opacity: textOpacity }}
       >
-        <p className="mx-auto max-w-2xl text-center text-2xl leading-relaxed text-white md:text-3xl lg:text-[2.5rem] lg:leading-snug">
-          Simple API. Compliant invoices.
+        <p className="mx-auto max-w-2xl text-center text-2xl leading-relaxed text-black md:text-3xl lg:text-[2.5rem] lg:leading-snug">
+          โครงสร้างพื้นฐาน e-Tax Invoice
           <br />
-          Built for developers.
+          สำหรับประเทศไทย เพียง API เดียว
         </p>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const form = e.currentTarget;
+            const email = new FormData(form).get("email") as string;
+            if (email) {
+              // TODO: wire up to your API endpoint
+              alert(`ขอบคุณ! ${email} ถูกเพิ่มเข้า waitlist เรียบร้อยแล้ว`);
+              form.reset();
+            }
+          }}
+          className="pointer-events-auto mx-auto mt-6 flex max-w-md items-center rounded-full border border-black/20 bg-white/90 p-1.5 shadow-lg backdrop-blur-sm dark:border-white/20 dark:bg-black/60 md:mt-8"
+        >
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="กรอกอีเมลของคุณ"
+            className="flex-1 bg-transparent px-4 py-2.5 text-sm text-black outline-none placeholder:text-black/50 dark:text-white dark:placeholder:text-white/50 md:text-base"
+          />
+          <button
+            type="submit"
+            className="whitespace-nowrap rounded-full bg-black px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-black/80 dark:bg-white dark:text-black dark:hover:bg-white/80 md:text-base"
+          >
+            เข้าร่วม Waitlist
+          </button>
+        </form>
       </div>
 
       {/* Scroll space to enable animation */}

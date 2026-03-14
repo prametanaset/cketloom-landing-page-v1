@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef, useState, useCallback } from "react";
 
 const titles = [
-  "Simplified E-Invoicing.",
-  "Built for Developers.",
-  "100% Compliant.",
+  "e-Tax ที่เรียบง่าย",
+  "สร้างมาเพื่อนักพัฒนา",
+  "ถูกต้อง 100%",
 ];
 
 export function PhilosophySection() {
@@ -145,7 +145,7 @@ export function PhilosophySection() {
         <div className="text-center">
           
           <p className="mt-8 leading-relaxed text-muted-foreground text-3xl text-center">
-            {("An abstraction layer that transforms complex tax regulations and technical standards into a simple REST API. Integrate e-Tax Invoice generation in minutes, not months — no deep tax knowledge required.").split(" ").map((word, index, array) => {
+            {("Abstraction layer ที่แปลงกฎระเบียบภาษีและมาตรฐานทางเทคนิคที่ซับซ้อนให้กลายเป็น REST API ที่ใช้งานง่าย เชื่อมต่อระบบสร้าง e-Tax Invoice ได้ภายในไม่กี่นาที ไม่ใช่หลายเดือน — ไม่ต้องมีความรู้ด้านภาษีเชิงลึก").split(" ").map((word, index, array) => {
               const wordProgress = Math.max(0, Math.min(1, (descriptionProgress * array.length) - index));
               const opacity = wordProgress;
               const blur = (1 - wordProgress) * 40;
