@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import createGlobe from "cobe";
 import { ArrowUpRight } from "lucide-react";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 
@@ -1090,7 +1091,7 @@ function CodeToInvoiceIllustration() {
   const t = d.theme;
 
   return (
-    <div className="relative h-full">
+    <div className="relative">
       {/* Left — HTML code editor (absolute, overflows and gets clipped by card) */}
       <div className="absolute left-3 top-6 z-10 w-[200px] overflow-hidden rounded-t-xl border border-b-0 border-neutral-200 bg-neutral-50 shadow-lg md:left-10 md:top-10 md:w-[48%] dark:border-neutral-700 dark:bg-[#1a1b2e]">
         {/* Window chrome */}
@@ -1343,7 +1344,7 @@ function CodeToInvoiceIllustration() {
       </div>
 
       {/* Right — Rendered invoice document (absolute, starts slightly lower, overlaps code editor) */}
-      <div className="absolute -right-30 top-38 z-20 w-[300px] md:right-10 md:top-25 md:w-[52%] md:h-[500px]">
+      <div className="absolute -right-25 top-16 z-20 h-[500px] w-[300px] md:right-10 md:top-25 md:w-[52%] md:h-[500px]">
         {/* Outer frosted bezel */}
         <div className="h-full rounded-t-xl border border-b-0 border-white/10 bg-neutral-300/40 p-1.5 pb-0 shadow-2xl backdrop-blur-xl dark:bg-white/[0.08]">
           {/* Inner paper */}
@@ -1363,7 +1364,7 @@ function SubscriptionChartIllustration() {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-3 overflow-hidden px-4">
       {/* ──── Row 1: Package Info Card ──── */}
-      <div className="w-full max-w-[320px] rounded-xl border border-neutral-200 bg-white p-5 shadow-lg dark:border-neutral-800 dark:bg-neutral-900">
+      <div className="w-full max-w-[320px] rounded-xl border border-neutral-200 bg-white p-5 shadow-none dark:border-neutral-800 dark:bg-neutral-900">
         {/* Plan header with icon */}
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-100 dark:bg-violet-900/40">
@@ -1399,7 +1400,7 @@ function SubscriptionChartIllustration() {
       </div>
 
       {/* ──── Row 2: e-Tax Email Alert Card ──── */}
-      <div className="w-full max-w-[320px] rounded-xl border border-neutral-200 bg-white p-5 shadow-lg dark:border-neutral-800 dark:bg-neutral-900">
+      <div className="w-full max-w-[320px] rounded-xl border border-neutral-200 bg-white p-5 shadow-none dark:border-neutral-800 dark:bg-neutral-900">
         {/* Alert header */}
         <div className="flex items-center gap-2.5">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-neutral-100 dark:bg-neutral-800">
@@ -1442,68 +1443,108 @@ function SubscriptionChartIllustration() {
 }
 
 function MarketplaceIllustration() {
-  const merchants = [
-    { name: "Store Alpha", docs: 1240, color: "bg-blue-500" },
-    { name: "Store Beta", docs: 856, color: "bg-violet-500" },
-    { name: "Store Gamma", docs: 2103, color: "bg-amber-500" },
+  const products = [
+    { name: "ใบกำกับภาษี #1042", variant: "อุปกรณ์สำนักงาน", price: "฿2,450.00", shop: "Cartsy" },
+    { name: "ใบกำกับภาษี #1043", variant: "วัสดุสิ้นเปลือง", price: "฿1,680.00", shop: "Cartsy" },
+  ];
+
+  // Sparkle positions for confetti effect
+  const sparkles = [
+    { x: "8%", y: "5%", size: 3, color: "bg-pink-400", delay: "0s" },
+    { x: "85%", y: "8%", size: 2.5, color: "bg-fuchsia-400", delay: "0.3s" },
+    { x: "15%", y: "25%", size: 2, color: "bg-violet-400", delay: "0.6s" },
+    { x: "90%", y: "30%", size: 3.5, color: "bg-pink-300", delay: "0.15s" },
+    { x: "5%", y: "55%", size: 2, color: "bg-fuchsia-300", delay: "0.45s" },
+    { x: "92%", y: "60%", size: 2.5, color: "bg-violet-300", delay: "0.75s" },
+    { x: "12%", y: "80%", size: 3, color: "bg-pink-500", delay: "0.2s" },
+    { x: "88%", y: "85%", size: 2, color: "bg-fuchsia-500", delay: "0.5s" },
+    { x: "50%", y: "3%", size: 2, color: "bg-pink-300", delay: "0.1s" },
+    { x: "70%", y: "15%", size: 1.5, color: "bg-violet-300", delay: "0.4s" },
+    { x: "30%", y: "90%", size: 2, color: "bg-pink-400", delay: "0.7s" },
   ];
 
   return (
-    <div className="flex h-full flex-col justify-end px-4 pb-4">
-      <div className="overflow-hidden rounded-lg border border-border bg-white p-3 shadow-lg dark:bg-neutral-900">
-        <div className="mb-2 flex items-center gap-2">
-          <div className="flex h-5 w-5 items-center justify-center rounded bg-foreground">
-            <svg
-              className="h-3 w-3 text-background"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-              />
-            </svg>
+    <div className="relative flex h-full items-center justify-center overflow-hidden px-4 py-10">
+
+      {/* Sparkle confetti particles */}
+      {sparkles.map((s, i) => (
+        <div
+          key={i}
+          className={`pointer-events-none absolute rounded-full ${s.color} opacity-60 dark:opacity-40`}
+          style={{
+            left: s.x,
+            top: s.y,
+            width: s.size,
+            height: s.size,
+            animation: `float 3s ease-in-out infinite`,
+            animationDelay: s.delay,
+          }}
+        />
+      ))}
+
+      <div className="relative z-10 w-[360px] space-y-4">
+        {/* User chat bubble */}
+        <div className="flex justify-end">
+          <div className="max-w-[88%] rounded-2xl rounded-br-md px-4 py-3 shadow-lg">
+            <p className="text-sm font-medium leading-snug text-black">
+              ขอใบกำกับภาษีอิเล็กทรอนิกส์สำหรับออเดอร์ล่าสุดค่ะ
+            </p>
           </div>
-          <span className="text-[11px] font-medium text-foreground">
-            มัลติเทแนนท์
-          </span>
         </div>
-        <div className="space-y-2">
-          {merchants.map((m, i) => (
+
+        {/* Bot response bubble */}
+        <div className="flex justify-start">
+          <div className="max-w-[88%] rounded-2xl rounded-bl-md bg-white/80 px-4 py-3 shadow-sm backdrop-blur-sm dark:bg-neutral-800/80">
+            <p className="text-sm leading-snug text-neutral-700 dark:text-neutral-300">
+              พบ 2 รายการที่พร้อมออก e-Tax Invoice ค่ะ
+            </p>
+          </div>
+        </div>
+
+        {/* Product cards grid */}
+        <div className="grid grid-cols-2 gap-3">
+          {products.map((prod, i) => (
             <div
               key={i}
-              className="flex items-center gap-2 rounded-md border border-border p-2"
+              className="overflow-hidden rounded-xl border border-neutral-200/60 bg-white dark:border-neutral-700/50 dark:bg-neutral-900"
             >
-              <div
-                className={`h-6 w-6 rounded-md ${m.color} flex items-center justify-center text-[9px] font-bold text-white`}
-              >
-                {m.name.charAt(6)}
+              {/* Product image area */}
+              <div className={`flex h-[120px] items-center justify-center ${i === 0 ? "bg-blue-50/80 dark:bg-blue-950/30" : "bg-violet-50/80 dark:bg-violet-950/30"}`}>
+                {/* Invoice document SVG */}
+                <svg className={`h-20 w-20 ${i === 0 ? "text-blue-500" : "text-violet-500"}`} viewBox="0 0 64 64" fill="none">
+                  {/* Paper */}
+                  <rect x="14" y="6" width="36" height="52" rx="3" fill="white" stroke="currentColor" strokeWidth="1.5" />
+                  {/* Fold corner */}
+                  <path d="M38 6V16H50" fill="white" />
+                  <path d="M38 6L50 16H38V6Z" fill="currentColor" opacity="0.15" />
+                  <path d="M38 6V16H50" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  {/* Header line */}
+                  <rect x="20" y="22" width="16" height="2.5" rx="1" fill="currentColor" opacity="0.7" />
+                  {/* Text lines */}
+                  <rect x="20" y="28" width="24" height="1.5" rx="0.75" fill="currentColor" opacity="0.2" />
+                  <rect x="20" y="33" width="20" height="1.5" rx="0.75" fill="currentColor" opacity="0.2" />
+                  <rect x="20" y="38" width="22" height="1.5" rx="0.75" fill="currentColor" opacity="0.2" />
+                  {/* Total area */}
+                  <rect x="20" y="44" width="24" height="8" rx="1.5" fill="currentColor" opacity="0.08" />
+                  <rect x="23" y="47" width="12" height="2" rx="1" fill="currentColor" opacity="0.4" />
+                </svg>
               </div>
-              <div className="flex-1">
-                <p className="text-[10px] font-medium text-foreground">
-                  {m.name}
-                </p>
-                <p className="text-[9px] text-muted-foreground">
-                  {m.docs.toLocaleString()} docs
-                </p>
+
+              {/* Product info */}
+              <div className="p-3">
+                <p className="text-sm font-bold text-foreground">{prod.name}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{prod.variant}</p>
+                <p className="mt-1.5 text-sm font-bold text-foreground">{prod.price}</p>
+                <p className="text-xs text-muted-foreground">{prod.shop}</p>
               </div>
-              <svg
-                className="h-3 w-3 text-emerald-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
             </div>
           ))}
         </div>
+
+        {/* CTA button — dark style like reference */}
+        <button className="w-full rounded-xl border-2 border-neutral-800 bg-neutral-800 py-3 text-sm font-bold text-white transition-colors dark:border-neutral-200 dark:bg-neutral-200 dark:text-neutral-900">
+          ขอ e-Tax Invoice
+        </button>
       </div>
     </div>
   );
@@ -1511,7 +1552,7 @@ function MarketplaceIllustration() {
 
 function POSIllustration() {
   return (
-    <div className="flex h-full items-center justify-center">
+    <div className="flex py-10 h-full items-center justify-center">
       {/* iPhone 15 Pro frame with overlaid app content */}
       <div className="relative w-[220px]" style={{ aspectRatio: "433 / 882" }}>
         {/* Layer 1: iPhone 15 Pro SVG frame (base) */}
@@ -1565,7 +1606,7 @@ function POSIllustration() {
 
         {/* Layer 2: App screen content (on top of SVG frame, below dynamic island) */}
         <div
-          className="absolute z-10 overflow-hidden bg-[#C8E64A] dark:bg-[#3a4a10]"
+          className="absolute z-10 overflow-hidden bg-[#e4e4e4] dark:bg-[#3a4a10]"
           style={{
             left: "4.9%",
             top: "2.18%",
@@ -1574,13 +1615,7 @@ function POSIllustration() {
             borderRadius: "12.87% / 6.6%",
           }}
         >
-          {/* Decorative diagonal lines */}
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute left-[20%] top-0 h-[200%] w-px origin-top rotate-[25deg] bg-[#b8d63a] dark:bg-[#4a5a18]" />
-            <div className="absolute left-[55%] top-0 h-[200%] w-px origin-top rotate-[25deg] bg-[#b8d63a] dark:bg-[#4a5a18]" />
-            <div className="absolute left-[80%] top-0 h-[200%] w-px origin-top rotate-[25deg] bg-[#b8d63a] dark:bg-[#4a5a18]" />
-          </div>
-
+       
           {/* Status bar */}
           <div className="relative z-10 flex items-center justify-between px-5 pt-[18%] pb-1">
             <span className="text-[7px] font-medium text-neutral-800 dark:text-neutral-300">9:41</span>
@@ -1636,10 +1671,7 @@ function POSIllustration() {
               </button>
             </div>
 
-            {/* by cketloom */}
-            <p className="mt-4 pb-2 text-center text-[7px] text-neutral-600 dark:text-neutral-400">
-              by cketloom
-            </p>
+         
           </div>
         </div>
 
@@ -1669,145 +1701,133 @@ function POSIllustration() {
 }
 
 function GlobalNetworkIllustration() {
-  const nodes: [number, number][] = [
-    [85, 55],
-    [95, 72],
-    [110, 45],
-    [130, 68],
-    [148, 52],
-    [100, 88],
-    [120, 105],
-    [142, 82],
-    [158, 98],
-    [88, 108],
-    [72, 85],
-    [162, 72],
-    [105, 122],
-    [138, 118],
-    [115, 62],
-    [128, 42],
-    [68, 78],
-    [155, 108],
-    [82, 102],
-    [168, 88],
-  ];
-  const lines: [number, number, number, number][] = [
-    [85, 55, 110, 45],
-    [110, 45, 130, 68],
-    [130, 68, 148, 52],
-    [95, 72, 120, 105],
-    [100, 88, 142, 82],
-    [120, 105, 138, 118],
-    [72, 85, 88, 108],
-    [158, 98, 162, 72],
-    [115, 62, 128, 42],
-    [85, 55, 95, 72],
-    [130, 68, 142, 82],
-    [100, 88, 88, 108],
-    [148, 52, 162, 72],
-    [82, 102, 72, 85],
-    [155, 108, 138, 118],
-  ];
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const phiRef = useRef(1.8);
+  const pointerInteracting = useRef<number | null>(null);
+  const pointerInteractionMovement = useRef(0);
+  const globeRef = useRef<ReturnType<typeof createGlobe> | null>(null);
+  const [canvasOpacity, setCanvasOpacity] = useState(0);
+  const [canvasSize, setCanvasSize] = useState(300);
+
+  const markers = useMemo(
+    (): Array<{ location: [number, number]; size: number }> => [
+      { location: [13.76, 100.5], size: 0.12 },
+      { location: [35.68, 139.65], size: 0.07 },
+      { location: [22.32, 114.17], size: 0.07 },
+      { location: [1.35, 103.82], size: 0.07 },
+      { location: [37.57, 126.98], size: 0.06 },
+      { location: [51.51, -0.13], size: 0.05 },
+      { location: [40.71, -74.01], size: 0.05 },
+      { location: [-33.87, 151.21], size: 0.05 },
+    ],
+    []
+  );
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const canvas = canvasRef.current;
+    if (!container || !canvas) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const size = Math.min(entry.contentRect.width, entry.contentRect.height);
+        setCanvasSize(size);
+      }
+    });
+    resizeObserver.observe(container);
+
+    const isMobile = window.innerWidth < 768;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !globeRef.current) {
+          globeRef.current = createGlobe(canvas, {
+            devicePixelRatio: isMobile ? 1 : Math.min(2, window.devicePixelRatio),
+            width: canvasSize * (isMobile ? 1 : Math.min(2, window.devicePixelRatio)),
+            height: canvasSize * (isMobile ? 1 : Math.min(2, window.devicePixelRatio)),
+            phi: phiRef.current,
+            theta: 0.15,
+            dark: 0,
+            diffuse: 6,
+            mapSamples: isMobile ? 10000 : 16000,
+            mapBrightness: 12,
+            baseColor: [1, 1, 1],
+            markerColor: [0.55, 0.3, 0.85],
+            glowColor: [1, 1, 1],
+            markers,
+            onRender: (state) => {
+              if (pointerInteracting.current === null) {
+                phiRef.current += 0.003;
+              }
+              state.phi = phiRef.current + pointerInteractionMovement.current;
+              state.width = canvasSize * (isMobile ? 1 : Math.min(2, window.devicePixelRatio));
+              state.height = canvasSize * (isMobile ? 1 : Math.min(2, window.devicePixelRatio));
+            },
+          });
+          setTimeout(() => setCanvasOpacity(1), 100);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(container);
+
+    return () => {
+      observer.disconnect();
+      resizeObserver.disconnect();
+      if (globeRef.current) {
+        globeRef.current.destroy();
+        globeRef.current = null;
+      }
+    };
+  }, [canvasSize, markers]);
+
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    pointerInteracting.current = e.clientX;
+    if (canvasRef.current) canvasRef.current.style.cursor = "grabbing";
+  }, []);
+
+  const onPointerUp = useCallback(() => {
+    pointerInteracting.current = null;
+    if (canvasRef.current) canvasRef.current.style.cursor = "grab";
+  }, []);
+
+  const onPointerOut = useCallback(() => {
+    pointerInteracting.current = null;
+    if (canvasRef.current) canvasRef.current.style.cursor = "grab";
+  }, []);
+
+  const onPointerMove = useCallback((e: React.PointerEvent) => {
+    if (pointerInteracting.current !== null) {
+      const delta = e.clientX - pointerInteracting.current;
+      pointerInteractionMovement.current = delta / 100;
+      phiRef.current += delta / 100;
+      pointerInteracting.current = e.clientX;
+      pointerInteractionMovement.current = 0;
+    }
+  }, []);
 
   return (
-    <div className="relative flex h-full items-center justify-center overflow-hidden">
-      <svg
-        viewBox="40 20 160 130"
-        className="absolute h-[130%] w-[130%] translate-x-[10%] translate-y-[5%]"
-      >
-        {/* Globe arcs */}
-        <circle
-          cx="120"
-          cy="80"
-          r="55"
-          fill="none"
-          stroke="rgba(255,255,255,0.05)"
-          strokeWidth="0.5"
-        />
-        <ellipse
-          cx="120"
-          cy="80"
-          rx="55"
-          ry="25"
-          fill="none"
-          stroke="rgba(255,255,255,0.04)"
-          strokeWidth="0.5"
-          transform="rotate(-25 120 80)"
-        />
-        <ellipse
-          cx="120"
-          cy="80"
-          rx="25"
-          ry="55"
-          fill="none"
-          stroke="rgba(255,255,255,0.04)"
-          strokeWidth="0.5"
-        />
-        {/* Highlight arc */}
-        <path
-          d="M 78 58 A 48 48 0 0 1 162 58"
-          fill="none"
-          stroke="rgba(236,72,153,0.25)"
-          strokeWidth="0.8"
-          strokeDasharray="3 2"
-        />
-        {/* Lines */}
-        {lines.map(([x1, y1, x2, y2], i) => (
-          <line
-            key={i}
-            x1={x1}
-            y1={y1}
-            x2={x2}
-            y2={y2}
-            stroke="rgba(255,255,255,0.08)"
-            strokeWidth="0.4"
-          />
-        ))}
-        {/* Dots */}
-        {nodes.map(([cx, cy], i) => (
-          <circle
-            key={i}
-            cx={cx}
-            cy={cy}
-            r={i < 5 ? 2.2 : i < 10 ? 1.4 : 0.8}
-            fill={
-              i < 2
-                ? "rgba(167,139,250,0.8)"
-                : i < 6
-                  ? "rgba(255,255,255,0.45)"
-                  : "rgba(255,255,255,0.15)"
-            }
-          />
-        ))}
-        {/* Labeled nodes */}
-        {[
-          { x: 110, y: 45, label: "SAP" },
-          { x: 142, y: 82, label: "ERP" },
-          { x: 88, y: 108, label: "QBO" },
-        ].map((n, i) => (
-          <g key={`label-${i}`}>
-            <circle
-              cx={n.x}
-              cy={n.y}
-              r="6"
-              fill="rgba(139,92,246,0.3)"
-              stroke="rgba(255,255,255,0.2)"
-              strokeWidth="0.4"
-            />
-            <text
-              x={n.x}
-              y={n.y + 1}
-              textAnchor="middle"
-              fill="white"
-              fontSize="3.5"
-              fontWeight="600"
-              fontFamily="system-ui"
-            >
-              {n.label}
-            </text>
-          </g>
-        ))}
-      </svg>
+    <div
+      ref={containerRef}
+      className="relative flex h-full w-full items-center justify-center overflow-hidden"
+    >
+      <canvas
+        ref={canvasRef}
+        style={{
+          width: canvasSize,
+          height: canvasSize,
+          maxWidth: "100%",
+          contain: "layout paint size",
+          opacity: canvasOpacity,
+          transition: "opacity 1s ease-in-out",
+          cursor: "grab",
+        }}
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        onPointerOut={onPointerOut}
+        onPointerMove={onPointerMove}
+      />
     </div>
   );
 }
@@ -1818,7 +1838,7 @@ const useCases = [
   {
     title: "ออกแบบหน้าตาใบกำกับภาษีได้เองด้วย HTML Template",
     illustration: CodeToInvoiceIllustration,
-    className: "row-span-2 md:col-span-8 md:row-span-2",
+    className: "md:col-span-8 md:row-span-2",
     dark: false,
   },
   {
@@ -1843,7 +1863,7 @@ const useCases = [
     title: "เชื่อมต่อข้อมูลไร้รอยต่อกับ ERP และระบบบัญชี",
     illustration: GlobalNetworkIllustration,
     className: "md:col-span-4 md:row-span-2",
-    dark: true,
+    dark: false,
   },
 ];
 
@@ -1935,7 +1955,7 @@ export function UseCasesSection() {
           </div>
 
           {/* Bento Grid */}
-          <div className="grid auto-rows-[240px] sm:auto-rows-[300px] grid-cols-1 gap-3 md:auto-rows-[280px] md:grid-cols-12">
+          <div className="grid grid-cols-1 gap-4 md:auto-rows-[280px] md:grid-cols-12">
             {useCases.map((useCase, index) => {
               const Illustration = useCase.illustration;
               return (
@@ -1971,7 +1991,7 @@ export function UseCasesSection() {
                       </h3>
                     </div>
                     {/* Illustration */}
-                    <div className="min-h-0 flex-1">
+                    <div className="min-h-[300px] flex-1 md:min-h-0">
                       <Illustration />
                     </div>
                   </div>

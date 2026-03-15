@@ -19,10 +19,10 @@ export default function Home() {
       {/* <FeaturedProductsSection /> */}
       <UseCasesSection />
       <TechnologySection />
-      <GallerySection />
+      {/* <GallerySection /> */}
       <CollectionSection />
       <EditorialSection />
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
       <FooterSection />
     </main>
   );

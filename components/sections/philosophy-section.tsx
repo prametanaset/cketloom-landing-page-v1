@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef, useState, useCallback } from "react";
 
 const titles = [
-  "ลดความซับซ้อนการสร้าง e-Tax",
+  <span key="1" className="block text-center">ลดความซับซ้อนการสร้าง <span className="whitespace-nowrap">e-Tax</span></span>,
   "สร้างมาเพื่อนักพัฒนา",
-  "ถูกต้องตามมาตรฐาน กรมสรรพากร",
+  <span key="3" className="block text-center">ถูกต้องตามมาตรฐาน <span className="whitespace-nowrap">กรมสรรพากร</span></span>,
 ];
 
 export function PhilosophySection() {
@@ -119,7 +119,7 @@ export function PhilosophySection() {
                   return (
                     <h2 
                       key={index}
-                      className="absolute inset-0 flex items-center justify-center text-[8vw] sm:text-[7vw] font-medium leading-tight tracking-tighter text-foreground md:text-[6vw] lg:text-[5vw] text-center px-4"
+                      className="absolute inset-0 flex items-center justify-center text-[8vw] sm:text-[7vw] font-medium leading-tight tracking-tighter text-foreground md:text-[6vw] lg:text-[5vw] px-4"
                       style={{
                         transform: `rotateX(${rotateX}deg) translateZ(0)`,
                         opacity,

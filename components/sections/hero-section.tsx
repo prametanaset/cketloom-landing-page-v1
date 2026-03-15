@@ -20,13 +20,21 @@ export function HeroSection() {
     if (!email) return;
 
     setSubmitting(true);
-    // TODO: wire up to your API endpoint
-    await new Promise((r) => setTimeout(r, 800));
-    setSubmitting(false);
-    setSubmitted(true);
-    form.reset();
-
-    setTimeout(() => setSubmitted(false), 4000);
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) throw new Error("Failed to submit");
+      setSubmitted(true);
+      form.reset();
+      setTimeout(() => setSubmitted(false), 4000);
+    } catch {
+      alert("เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
