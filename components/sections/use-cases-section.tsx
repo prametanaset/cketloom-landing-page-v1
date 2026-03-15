@@ -1362,7 +1362,7 @@ function CodeToInvoiceIllustration() {
 
 function SubscriptionChartIllustration() {
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-3 overflow-hidden px-4">
+    <div className="flex h-full flex-col items-center justify-center gap-3 overflow-hidden px-4 py-10">
       {/* ──── Row 1: Package Info Card ──── */}
       <div className="w-full max-w-[320px] rounded-xl border border-neutral-200 bg-white p-5 shadow-none dark:border-neutral-800 dark:bg-neutral-900">
         {/* Plan header with icon */}

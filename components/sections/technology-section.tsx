@@ -66,7 +66,7 @@ function ScrollRevealText({ text }: { text: string }) {
 
 const sideImages = [
   {
-    src: "/images/interior-view.png",
+    src: "/images/testimonial-house.png",
     alt: "API request flow diagram",
     position: "left",
   },
@@ -156,7 +156,7 @@ export function TechnologySection() {
           >
             
             {/* Left Column */}
-            <div 
+            {/* <div 
               className="relative overflow-hidden will-change-transform"
               style={{
                 width: `${sideWidth}%`,
@@ -174,7 +174,7 @@ export function TechnologySection() {
                   className="object-cover"
                 />
               ))}
-            </div>
+            </div> */}
 
             {/* Main Center Image */}
             <div 
@@ -187,7 +187,7 @@ export function TechnologySection() {
             >
               {/* Layered Images - Progressive Fade In */}
               {/* Image 1 - Base layer - Sunrise/Sunset with sun rays */}
-              <Image
+              {/* <Image
                 src="/images/mono-1.png"
                 alt="Platform overview"
                 fill
@@ -196,9 +196,9 @@ export function TechnologySection() {
                   opacity: scrollProgress < 0.25 ? 1 : 1,
                 }}
               />
-              
+               */}
               {/* Image 2 - Daytime scene - Fades in during first text cycle */}
-              <Image
+              {/* <Image
                 src="/images/mono-2.png"
                 alt="XML generation engine"
                 fill
@@ -207,10 +207,10 @@ export function TechnologySection() {
                   opacity: Math.max(0, Math.min(1, (scrollProgress - 0.1) / 0.2)),
                   transition: 'opacity 0.3s ease',
                 }}
-              />
+              /> */}
               
               {/* Image 3 - Dusk/Evening - Fades in during second text cycle */}
-              <Image
+              {/* <Image
                 src="/images/mono-3.png"
                 alt="PDF/A-3 hybrid creation"
                 fill
@@ -219,10 +219,10 @@ export function TechnologySection() {
                   opacity: Math.max(0, Math.min(1, (scrollProgress - 0.4) / 0.2)),
                   transition: 'opacity 0.3s ease',
                 }}
-              />
+              /> */}
               
               {/* Image 4 - Night with stars - Fades in during third text cycle */}
-              <Image
+              {/* <Image
                 src="/images/mono-4.png"
                 alt="Schema auto-update system"
                 fill
@@ -232,7 +232,7 @@ export function TechnologySection() {
                   transition: 'opacity 0.3s ease',
                 }}
               />
-              
+               */}
               <div className="absolute inset-0 bg-foreground/40" />
               
               {/* Title Text - Cycles through 3 texts with blur effect */}
@@ -297,7 +297,7 @@ export function TechnologySection() {
             </div>
 
             {/* Right Column */}
-            <div 
+            {/* <div 
               className="relative overflow-hidden will-change-transform"
               style={{
                 width: `${sideWidth}%`,
@@ -315,7 +315,7 @@ export function TechnologySection() {
                   className="object-cover"
                 />
               ))}
-            </div>
+            </div> */}
 
           </div>
         </div>
