@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef, useState, useCallback } from "react";
 
 const titles = [
-  "e-Tax ที่เรียบง่าย",
+  "ลดความซับซ้อนการสร้าง e-Tax",
   "สร้างมาเพื่อนักพัฒนา",
-  "ถูกต้อง 100%",
+  "ถูกต้องตามมาตรฐาน กรมสรรพากร",
 ];
 
 export function PhilosophySection() {
@@ -144,7 +144,7 @@ export function PhilosophySection() {
       <div ref={descriptionRef} className="px-6 pt-8 pb-20 md:px-12 md:pt-12 md:pb-28 lg:px-20 lg:pt-16 lg:pb-36">
         <div className="text-center">
           
-          <p className="mt-8 leading-relaxed text-muted-foreground text-3xl text-center">
+          <p className="mt-8 leading-relaxed text-muted-foreground text-xl sm:text-2xl md:text-3xl text-center">
             {("Abstraction layer ที่แปลงกฎระเบียบภาษีและมาตรฐานทางเทคนิคที่ซับซ้อนให้กลายเป็น REST API ที่ใช้งานง่าย เชื่อมต่อระบบสร้าง e-Tax Invoice ได้ภายในไม่กี่นาที ไม่ใช่หลายเดือน — ไม่ต้องมีความรู้ด้านภาษีเชิงลึก").split(" ").map((word, index, array) => {
               const wordProgress = Math.max(0, Math.min(1, (descriptionProgress * array.length) - index));
               const opacity = wordProgress;

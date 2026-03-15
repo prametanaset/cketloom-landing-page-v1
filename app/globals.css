@@ -75,7 +75,7 @@
 }
 
 @theme inline {
-  --font-sans: 'Inter', 'Inter Fallback', system-ui, sans-serif;
+  --font-sans: 'Inter', 'Inter Fallback', var(--font-noto-thai), 'Noto Sans Thai', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --font-display: 'PP Editorial New', 'Times New Roman', serif;
   --color-background: var(--background);
@@ -266,4 +266,9 @@
 
 .animate-fade-in {
   animation: fadeIn 0.7s ease-out forwards;
+}
+
+@keyframes progressFill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }

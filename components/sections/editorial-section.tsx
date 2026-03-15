@@ -66,7 +66,7 @@ export function EditorialSection() {
       
 
       {/* Decorative Icons */}
-      <div className="flex items-center justify-center gap-6 pb-20">
+      <div className="flex items-center justify-center gap-6 pb-8 md:pb-20">
         
         
       </div>
@@ -93,12 +93,12 @@ export function EditorialSection() {
         {specs.map((spec) => (
           <div
             key={spec.label}
-            className="border-b border-r border-border p-8 text-center last:border-r-0 md:border-b-0"
+            className="border-b border-r border-border p-4 md:p-8 text-center last:border-r-0 md:border-b-0"
           >
             <p className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
               {spec.label}
             </p>
-            <p className="font-medium text-foreground text-5xl">
+            <p className="font-medium text-foreground text-3xl md:text-5xl">
               {spec.value}
             </p>
           </div>

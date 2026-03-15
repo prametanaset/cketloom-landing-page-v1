@@ -1,10 +1,11 @@
 import React from "react"
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Noto_Sans_Thai } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
+const notoSansThai = Noto_Sans_Thai({ subsets: ["thai"], variable: '--font-noto-thai' });
 
 export const metadata: Metadata = {
   title: 'cketloom',
@@ -36,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th">
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} ${notoSansThai.variable} font-sans antialiased`}>
         {children}
         <Analytics />
       </body>

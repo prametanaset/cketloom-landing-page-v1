@@ -4,9 +4,15 @@ import { useEffect, useState } from "react"
 
 export function NeonOrbs() {
   const [mounted, setMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     setMounted(true)
+
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
   return (
@@ -17,10 +23,10 @@ export function NeonOrbs() {
           mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"
         }`}
         style={{
-          top: "-40%",
-          left: "-20%",
-          width: "80vw",
-          height: "80vw",
+          top: isMobile ? "-20%" : "-40%",
+          left: isMobile ? "-15%" : "-20%",
+          width: isMobile ? "120vw" : "80vw",
+          height: isMobile ? "120vw" : "80vw",
           maxWidth: "800px",
           maxHeight: "800px",
         }}
@@ -38,11 +44,11 @@ export function NeonOrbs() {
           mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
         style={{
-          bottom: "-50%",
+          bottom: isMobile ? "-30%" : "-50%",
           left: "50%",
           transform: "translateX(-50%)",
-          width: "100vw",
-          height: "100vw",
+          width: isMobile ? "140vw" : "100vw",
+          height: isMobile ? "140vw" : "100vw",
           maxWidth: "1000px",
           maxHeight: "1000px",
         }}
@@ -60,10 +66,10 @@ export function NeonOrbs() {
           mounted ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
         }`}
         style={{
-          top: "-30%",
-          right: "-25%",
-          width: "70vw",
-          height: "70vw",
+          top: isMobile ? "-15%" : "-30%",
+          right: isMobile ? "-15%" : "-25%",
+          width: isMobile ? "100vw" : "70vw",
+          height: isMobile ? "100vw" : "70vw",
           maxWidth: "700px",
           maxHeight: "700px",
         }}
@@ -81,10 +87,10 @@ export function NeonOrbs() {
           mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
         style={{
-          bottom: "-35%",
-          right: "-15%",
-          width: "75vw",
-          height: "75vw",
+          bottom: isMobile ? "-20%" : "-35%",
+          right: isMobile ? "-5%" : "-15%",
+          width: isMobile ? "110vw" : "75vw",
+          height: isMobile ? "110vw" : "75vw",
           maxWidth: "750px",
           maxHeight: "750px",
         }}
