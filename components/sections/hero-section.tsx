@@ -52,10 +52,10 @@ export function HeroSection() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-[2] flex min-h-[100svh] flex-col items-center justify-end px-6 pb-12 pt-32 md:px-12 md:pb-16 lg:px-20 lg:pb-20">
+      <div className="relative z-[2] flex min-h-[100svh] flex-col items-center justify-end px-4 sm:px-6 pb-12 pt-32 md:px-12 md:pb-16 lg:px-20 lg:pb-20">
         {/* Headline — value proposition first */}
         <h1
-          className={`max-w-4xl text-center font-medium text-4xl font-light leading-tight tracking-tight text-black transition-all duration-700 delay-100 ease-out dark:text-white md:text-5xl lg:text-5xl lg:leading-[0.8] ${
+          className={`max-w-4xl text-center font-medium text-3xl sm:text-4xl font-light leading-tight tracking-tight text-black transition-all duration-700 delay-100 ease-out dark:text-white md:text-5xl lg:text-5xl lg:leading-[0.8] ${
             mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
           }`}
         >
@@ -64,7 +64,7 @@ export function HeroSection() {
 
         {/* Subtitle */}
         <p
-          className={`mt-6 max-w-4xl text-center text-base font-medium leading-[1.2] text-black/60 transition-all duration-700 delay-200 ease-out dark:text-white/50 sm:text-xl md:text-4xl ${
+          className={`mt-6 max-w-4xl text-center text-sm sm:text-base font-medium leading-[1.2] text-black/60 transition-all duration-700 delay-200 ease-out dark:text-white/50 md:text-xl lg:text-4xl ${
             mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
           }`}
         >
@@ -76,7 +76,7 @@ export function HeroSection() {
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className={`mt-10 flex w-full max-w-md items-center rounded-full border border-black/10 bg-white/80 p-1.5 shadow-lg backdrop-blur-md transition-all duration-700 delay-300 ease-out dark:border-white/15 dark:bg-white/5 md:mt-9 ${
+          className={`mt-10 flex w-full max-w-sm sm:max-w-md flex-col sm:flex-row sm:items-center rounded-3xl sm:rounded-full border border-black/10 bg-white/80 p-1.5 shadow-lg backdrop-blur-md transition-all duration-700 delay-300 ease-out dark:border-white/15 dark:bg-white/5 md:mt-9 ${
             mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
           }`}
         >
@@ -90,12 +90,12 @@ export function HeroSection() {
             required
             autoComplete="email"
             placeholder="กรอกอีเมลของคุณ"
-            className="min-h-[44px] flex-1 bg-transparent px-4 text-sm text-black outline-none placeholder:text-black/40 dark:text-white dark:placeholder:text-white/40 md:text-base"
+            className="min-h-[44px] flex-1 bg-transparent px-3 sm:px-4 text-sm text-black outline-none placeholder:text-black/40 dark:text-white dark:placeholder:text-white/40 md:text-base"
           />
           <button
             type="submit"
             disabled={submitting}
-            className="min-h-[44px] cursor-pointer whitespace-nowrap rounded-full bg-black px-6 text-sm font-medium text-white transition-all duration-200 hover:bg-black/80 active:scale-[0.97] disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-white/80 md:text-base"
+            className="min-h-[44px] w-full sm:w-auto cursor-pointer whitespace-nowrap rounded-full bg-black px-4 sm:px-6 text-sm font-medium text-white transition-all duration-200 hover:bg-black/80 active:scale-[0.97] disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-white/80 md:text-base"
           >
             {submitting ? (
               <span className="inline-flex items-center gap-2">

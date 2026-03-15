@@ -36,7 +36,7 @@ function ScrollRevealText({ text }: { text: string }) {
   return (
     <p
       ref={containerRef}
-      className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold leading-snug text-white"
+      className="text-base sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold leading-snug text-white"
     >
       {words.map((word, index) => {
         // Calculate blur and opacity based on scroll progress
@@ -250,7 +250,7 @@ export function TechnologySection() {
                   return (
                     <h2 
                       key={cycleIndex}
-                      className="absolute max-w-3xl font-medium leading-tight tracking-tight text-white text-3xl md:text-5xl lg:text-7xl"
+                      className="absolute max-w-3xl font-medium leading-tight tracking-tight text-white text-2xl sm:text-3xl md:text-5xl lg:text-7xl"
                     >
                       {words.map((word, wordIndex) => {
                         let wordOpacity = 0;

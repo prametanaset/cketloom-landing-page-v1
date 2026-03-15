@@ -68,7 +68,7 @@ export function GallerySection() {
     >
       {/* Sticky container */}
       <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center px-4">
-        <div className="relative w-full max-w-5xl h-[70vh] md:h-[80vh]">
+        <div className="relative w-full max-w-5xl h-[60vh] sm:h-[70vh] md:h-[80vh]">
           {images.map((image, index) => {
             const isLast = index === isLastImage;
             

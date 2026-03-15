@@ -27,8 +27,8 @@ export function FooterSection() {
   return (
     <footer className="bg-background">
       {/* Main Footer Content */}
-      <div className="border-t border-border px-6 py-16 md:px-12 md:py-20 lg:px-20">
-        <div className="grid grid-cols-2 gap-12 md:grid-cols-4 lg:grid-cols-5">
+      <div className="border-t border-border px-4 sm:px-6 py-16 md:px-12 md:py-20 lg:px-20">
+        <div className="grid grid-cols-2 gap-8 sm:gap-12 md:grid-cols-4 lg:grid-cols-5">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1 lg:col-span-2">
             <Link href="#hero" className="text-lg font-medium text-foreground">

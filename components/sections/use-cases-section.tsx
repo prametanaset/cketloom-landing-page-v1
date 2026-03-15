@@ -321,39 +321,48 @@ const INVOICE_DATASETS: InvoiceDataset[] = [
 const SHUFFLE_CHARS =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789日月火水木金土";
 
-interface ShuffleCharState {
-  char: string;
-  resolved: boolean;
+// Detect mobile once at module level to avoid per-instance checks
+let _isMobile: boolean | null = null;
+function getIsMobile() {
+  if (_isMobile === null) {
+    _isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  }
+  return _isMobile;
 }
 
-function useShuffleChars(
-  targetText: string,
-  animKey: number,
-): ShuffleCharState[] {
-  const [chars, setChars] = useState<ShuffleCharState[]>(() =>
-    Array.from(targetText).map((ch) => ({ char: ch, resolved: true })),
-  );
+/**
+ * Optimized ShuffleText — uses direct DOM manipulation via refs instead of
+ * React state. On mobile, skips the shuffle animation entirely and shows
+ * text with a simple CSS fade to avoid ~105 concurrent rAF loops.
+ */
+function ShuffleText({ text, animKey }: { text: string; animKey: number }) {
+  const spanRef = useRef<HTMLSpanElement>(null);
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
-    const len = targetText.length;
+    const el = spanRef.current;
+    if (!el) return;
 
-    if (animKey === 0) {
-      setChars(
-        Array.from(targetText).map((ch) => ({ char: ch, resolved: true })),
-      );
+    // On mobile or first mount: just set text directly (no animation)
+    if (animKey === 0 || getIsMobile()) {
+      el.textContent = text;
+      el.style.opacity = "1";
       return;
     }
 
-    const resolvedFlags = new Array(len).fill(false);
+    // Desktop: run shuffle animation via direct DOM writes (no React state)
+    const len = text.length;
     const charBuf: string[] = [];
+    const resolvedFlags: boolean[] = [];
+
     for (let i = 0; i < len; i++) {
-      if (targetText[i] === " ") {
+      if (text[i] === " ") {
         charBuf[i] = " ";
         resolvedFlags[i] = true;
       } else {
         charBuf[i] =
           SHUFFLE_CHARS[Math.floor(Math.random() * SHUFFLE_CHARS.length)];
+        resolvedFlags[i] = false;
       }
     }
 
@@ -366,23 +375,24 @@ function useShuffleChars(
       resolveTimes[i] = 100 + eased * waveDuration;
     }
 
-    const lastScramble = new Array(len).fill(0);
+    const lastScramble = new Float64Array(len);
     const startTime = performance.now();
 
-    setChars(
-      charBuf.map((ch, i) => ({ char: ch, resolved: resolvedFlags[i] })),
-    );
+    el.textContent = charBuf.join("");
+    el.style.opacity = "0.4";
 
     const tick = (now: number) => {
       const elapsed = now - startTime;
       let allDone = true;
+      let changed = false;
 
       for (let i = 0; i < len; i++) {
         if (resolvedFlags[i]) continue;
 
         if (elapsed >= resolveTimes[i]) {
           resolvedFlags[i] = true;
-          charBuf[i] = targetText[i];
+          charBuf[i] = text[i];
+          changed = true;
           continue;
         }
 
@@ -396,41 +406,36 @@ function useShuffleChars(
           charBuf[i] =
             SHUFFLE_CHARS[Math.floor(Math.random() * SHUFFLE_CHARS.length)];
           lastScramble[i] = elapsed;
+          changed = true;
         }
       }
 
-      setChars(
-        charBuf.map((ch, i) => ({ char: ch, resolved: resolvedFlags[i] })),
-      );
+      // Only touch the DOM when something actually changed
+      if (changed) {
+        el.textContent = charBuf.join("");
+      }
 
-      if (!allDone) {
+      if (allDone) {
+        el.style.opacity = "1";
+      } else {
+        // Fade opacity in as more chars resolve
+        const resolvedCount = resolvedFlags.filter(Boolean).length;
+        el.style.opacity = String(0.4 + 0.6 * (resolvedCount / len));
         rafRef.current = requestAnimationFrame(tick);
       }
     };
 
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [targetText, animKey]);
+  }, [text, animKey]);
 
-  return chars;
-}
-
-function ShuffleText({ text, animKey }: { text: string; animKey: number }) {
-  const chars = useShuffleChars(text, animKey);
   return (
-    <>
-      {chars.map((c, i) => (
-        <span
-          key={i}
-          style={{
-            opacity: c.resolved ? 1 : 0.4,
-            transition: c.resolved ? "opacity 200ms ease-out" : "none",
-          }}
-        >
-          {c.char}
-        </span>
-      ))}
-    </>
+    <span
+      ref={spanRef}
+      style={{ transition: "opacity 200ms ease-out" }}
+    >
+      {text}
+    </span>
   );
 }
 
@@ -874,10 +879,7 @@ function InvoicePaperMinimal({ d, t, animKey }: InvoicePaperProps) {
 function InvoicePaperSplit({ d, t, animKey }: InvoicePaperProps) {
   return (
     <>
-      {/* Top gradient stripe */}
-      <div
-        className={`h-0.5 bg-gradient-to-r transition-colors duration-700 ${t.accentFrom} ${t.accentTo}`}
-      />
+    
       {/* Split header with QR code placeholder */}
       <div className="bg-amber-50/80 px-3 py-2 dark:bg-amber-900/15">
         <div className="flex items-center justify-between">
@@ -1090,7 +1092,7 @@ function CodeToInvoiceIllustration() {
   return (
     <div className="relative h-full">
       {/* Left — HTML code editor (absolute, overflows and gets clipped by card) */}
-      <div className="absolute left-2 top-10 z-10 w-[46%] overflow-hidden rounded-t-xl border border-b-0 border-neutral-200 bg-neutral-50 shadow-lg md:left-10 md:top-10 md:w-[48%] dark:border-neutral-700 dark:bg-[#1a1b2e]">
+      <div className="absolute left-3 top-6 z-10 w-[200px] overflow-hidden rounded-t-xl border border-b-0 border-neutral-200 bg-neutral-50 shadow-lg md:left-10 md:top-10 md:w-[48%] dark:border-neutral-700 dark:bg-[#1a1b2e]">
         {/* Window chrome */}
         <div className="flex items-center gap-1.5 border-b border-neutral-200 bg-neutral-100/80 px-2.5 py-1.5 dark:border-white/[0.06] dark:bg-[#16172a]">
           <div className="flex gap-1">
@@ -1341,7 +1343,7 @@ function CodeToInvoiceIllustration() {
       </div>
 
       {/* Right — Rendered invoice document (absolute, starts slightly lower, overlaps code editor) */}
-      <div className="absolute right-2 top-16 z-20 w-[54%] md:right-10 md:top-25 md:w-[52%]">
+      <div className="absolute -right-30 top-38 z-20 w-[300px] md:right-10 md:top-25 md:w-[52%]">
         {/* Outer frosted bezel */}
         <div className="h-full rounded-t-xl border border-b-0 border-white/10 bg-neutral-300/40 p-1.5 pb-0 shadow-2xl backdrop-blur-xl dark:bg-white/[0.08]">
           {/* Inner paper */}
@@ -1816,7 +1818,7 @@ const useCases = [
   {
     title: "ออกแบบหน้าตาใบกำกับภาษีได้เองด้วย HTML Template",
     illustration: CodeToInvoiceIllustration,
-    className: "md:col-span-8 md:row-span-2",
+    className: "row-span-2 md:col-span-8 md:row-span-2",
     dark: false,
   },
   {
@@ -1851,7 +1853,7 @@ export function UseCasesSection() {
       <div className="px-6 md:px-12 lg:px-20">
         <div className="mx-auto max-w-7xl">
           {/* Bento Grid */}
-          <div className="grid auto-rows-[300px] grid-cols-1 gap-3 md:auto-rows-[280px] md:grid-cols-12">
+          <div className="grid auto-rows-[240px] sm:auto-rows-[300px] grid-cols-1 gap-3 md:auto-rows-[280px] md:grid-cols-12">
             {useCases.map((useCase, index) => {
               const Illustration = useCase.illustration;
               return (

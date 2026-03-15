@@ -50,7 +50,7 @@ export function FeaturedProductsSection() {
     <section id="technology" className="relative bg-background py-20 md:py-32">
       <div className="px-4 md:px-12 lg:px-20">
         {/* Bento Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full max-w-7xl mx-auto auto-rows-[180px] md:auto-rows-[220px]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 w-full max-w-7xl mx-auto auto-rows-[140px] sm:auto-rows-[180px] md:auto-rows-[220px]">
           {features.map((feature, index) => (
             <div 
               key={index} 
