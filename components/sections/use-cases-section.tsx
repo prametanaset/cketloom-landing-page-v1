@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 
@@ -1343,7 +1343,7 @@ function CodeToInvoiceIllustration() {
       </div>
 
       {/* Right — Rendered invoice document (absolute, starts slightly lower, overlaps code editor) */}
-      <div className="absolute -right-30 top-38 z-20 w-[300px] md:right-10 md:top-25 md:w-[52%]">
+      <div className="absolute -right-30 top-38 z-20 w-[300px] md:right-10 md:top-25 md:w-[52%] md:h-[500px]">
         {/* Outer frosted bezel */}
         <div className="h-full rounded-t-xl border border-b-0 border-white/10 bg-neutral-300/40 p-1.5 pb-0 shadow-2xl backdrop-blur-xl dark:bg-white/[0.08]">
           {/* Inner paper */}
@@ -1848,10 +1848,92 @@ const useCases = [
 ];
 
 export function UseCasesSection() {
+  const descriptionRef = useRef<HTMLDivElement>(null);
+  const [descriptionProgress, setDescriptionProgress] = useState(0);
+  const rafRef = useRef<number | null>(null);
+
+  const updateTransforms = useCallback(() => {
+    if (!descriptionRef.current) return;
+
+    const windowHeight = window.innerHeight;
+    const descRect = descriptionRef.current.getBoundingClientRect();
+    const descTop = descRect.top;
+    const descHeight = descRect.height;
+
+    const startTrigger = windowHeight * 0.8;
+    const endTrigger = windowHeight * 0.2;
+
+    if (descTop < startTrigger && descTop > endTrigger - descHeight) {
+      const descProgress = Math.max(
+        0,
+        Math.min(1, (startTrigger - descTop) / (startTrigger - endTrigger))
+      );
+      setDescriptionProgress(descProgress);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(updateTransforms);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    updateTransforms();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [updateTransforms]);
+
   return (
     <section className="relative bg-background py-20 md:py-32">
       <div className="px-6 md:px-12 lg:px-20">
         <div className="mx-auto max-w-7xl">
+          {/* Animated intro text */}
+          <div
+            ref={descriptionRef}
+            className="pb-12 pt-0 md:pb-16 md:pt-0 lg:pb-20"
+          >
+            <div className="text-center">
+              <p className="leading-relaxed text-lg text-left sm:text-xl md:text-3xl">
+                {(() => {
+                  const boldPart = "โครงสร้างพื้นฐาน e-Tax Invoice สำหรับทุกธุรกิจ";
+                  const mutedPart = "เชื่อมต่อระบบออกใบกำกับภาษีอิเล็กทรอนิกส์ผ่าน API เพียงไม่กี่บรรทัด รองรับทุกรูปแบบเอกสารตามมาตรฐานกรมสรรพากร โดยไม่ต้องเข้าใจความซับซ้อนเบื้องหลัง";
+                  const fullText = `${boldPart} ${mutedPart}`;
+                  const boldWordCount = boldPart.split(" ").length;
+
+                  return fullText.split(" ").map((word, index, array) => {
+                    const wordProgress = Math.max(
+                      0,
+                      Math.min(1, descriptionProgress * array.length - index)
+                    );
+                    const opacity = wordProgress;
+                    const blur = (1 - wordProgress) * 40;
+                    const isBold = index < boldWordCount;
+
+                    return (
+                      <span
+                        key={index}
+                        className={isBold ? "text-foreground font-normal text-xl sm:text-5xl" : "text-muted-foreground font-normal text-xl sm:text-5xl"}
+                        style={{
+                          opacity,
+                          filter: `blur(${blur}px)`,
+                          transition:
+                            "opacity 0.3s ease, filter 0.3s ease",
+                        }}
+                      >
+                        {word}
+                        {index < array.length - 1 ? " " : ""}
+                      </span>
+                    );
+                  });
+                })()}
+              </p>
+            </div>
+          </div>
+
           {/* Bento Grid */}
           <div className="grid auto-rows-[240px] sm:auto-rows-[300px] grid-cols-1 gap-3 md:auto-rows-[280px] md:grid-cols-12">
             {useCases.map((useCase, index) => {
