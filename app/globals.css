@@ -272,3 +272,48 @@
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
 }
+
+@keyframes gradient-drift-1 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  25% { transform: translate(15%, -20%) scale(1.1); }
+  50% { transform: translate(-10%, 15%) scale(0.95); }
+  75% { transform: translate(20%, 10%) scale(1.05); }
+}
+
+@keyframes gradient-drift-2 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  25% { transform: translate(-20%, 15%) scale(1.05); }
+  50% { transform: translate(15%, -10%) scale(1.1); }
+  75% { transform: translate(-15%, -20%) scale(0.95); }
+}
+
+@keyframes gradient-drift-3 {
+  0%, 100% { transform: translate(0%, 0%) scale(1.05); }
+  25% { transform: translate(10%, 20%) scale(0.95); }
+  50% { transform: translate(-20%, -15%) scale(1.1); }
+  75% { transform: translate(15%, -10%) scale(1); }
+}
+
+@keyframes db-travel {
+  0% { offset-distance: 0%; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+.db-light-1 {
+  offset-path: path('M 31 10 v 15 q 0 5 5 5 h 59 q 5 0 5 5 v 10');
+  animation: db-travel 2s ease-in-out infinite;
+}
+.db-light-2 {
+  offset-path: path('M 77 10 v 10 q 0 5 5 5 h 13 q 5 0 5 5 v 10');
+  animation: db-travel 2s ease-in-out infinite 0.3s;
+}
+.db-light-3 {
+  offset-path: path('M 124 10 v 10 q 0 5 -5 5 h -14 q -5 0 -5 5 v 10');
+  animation: db-travel 2s ease-in-out infinite 0.6s;
+}
+.db-light-4 {
+  offset-path: path('M 170 10 v 15 q 0 5 -5 5 h -60 q -5 0 -5 5 v 10');
+  animation: db-travel 2s ease-in-out infinite 0.9s;
+}

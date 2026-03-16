@@ -71,10 +71,52 @@ export function PhilosophySection() {
   }, [updateTransforms]);
 
   return (
-    <section id="products" className="bg-background">
+    <section id="products" className="bg-background relative">
       {/* Scroll-Animated Product Grid */}
       <div ref={sectionRef} className="relative" style={{ height: "200vh" }}>
         <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+          {/* Animated Gradient Background - inside sticky so it's always visible */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+            <div
+              className="absolute rounded-full"
+              style={{
+                width: '70vw',
+                height: '70vw',
+                background: 'radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, rgba(99, 102, 241, 0.1) 40%, transparent 70%)',
+                top: '-20%',
+                left: '-20%',
+                filter: 'blur(60px)',
+                animation: 'gradient-drift-1 20s ease-in-out infinite',
+                willChange: 'transform',
+              }}
+            />
+            <div
+              className="absolute rounded-full"
+              style={{
+                width: '60vw',
+                height: '60vw',
+                background: 'radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, rgba(139, 92, 246, 0.08) 40%, transparent 70%)',
+                top: '10%',
+                right: '-25%',
+                filter: 'blur(50px)',
+                animation: 'gradient-drift-2 25s ease-in-out infinite',
+                willChange: 'transform',
+              }}
+            />
+            <div
+              className="absolute rounded-full"
+              style={{
+                width: '55vw',
+                height: '55vw',
+                background: 'radial-gradient(circle, rgba(14, 165, 233, 0.25) 0%, rgba(14, 165, 233, 0.06) 40%, transparent 70%)',
+                bottom: '-15%',
+                left: '10%',
+                filter: 'blur(50px)',
+                animation: 'gradient-drift-3 22s ease-in-out infinite',
+                willChange: 'transform',
+              }}
+            />
+          </div>
           <div className="relative w-full max-w-7xl px-4">
             {/* Title - centered with 3D rotation */}
             <div 

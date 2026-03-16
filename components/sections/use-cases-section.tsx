@@ -1464,25 +1464,9 @@ function MarketplaceIllustration() {
   ];
 
   return (
-    <div className="relative flex h-full items-center justify-center overflow-hidden px-4 py-10">
+    <div className="relative flex h-full items-center justify-center overflow-hidden px-4 py-15">
 
-      {/* Sparkle confetti particles */}
-      {sparkles.map((s, i) => (
-        <div
-          key={i}
-          className={`pointer-events-none absolute rounded-full ${s.color} opacity-60 dark:opacity-40`}
-          style={{
-            left: s.x,
-            top: s.y,
-            width: s.size,
-            height: s.size,
-            animation: `float 3s ease-in-out infinite`,
-            animationDelay: s.delay,
-          }}
-        />
-      ))}
-
-      <div className="relative z-10 w-[360px] space-y-4">
+      <div className="relative z-10 w-[350px] space-y-4">
         {/* User chat bubble */}
         <div className="flex justify-end">
           <div className="max-w-[88%] rounded-2xl rounded-br-md px-4 py-3 shadow-lg">
@@ -1981,7 +1965,7 @@ export function UseCasesSection() {
                     {/* Header */}
                     <div className="flex items-start justify-between p-5 pb-0 md:p-6 md:pb-0">
                       <h3
-                        className={`max-w-[100%] text-lg font-normal leading-[1.25] md:text-xl lg:text-[26px] ${
+                        className={`max-w-[80%] text-lg font-normal leading-[1.25] md:text-xl lg:text-[26px] ${
                           useCase.dark
                             ? "text-white"
                             : "text-neutral-900 dark:text-white"
